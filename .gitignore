@@ -1,1 +1,4 @@
 01_Sources/YouTube/config/youtube_keys.json
+01_Sources/YouTube/raw/
+01_Sources/YouTube/logs/
+04_Insights/*.md
