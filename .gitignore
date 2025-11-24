@@ -1,4 +1,5 @@
 01_Sources/YouTube/config/youtube_keys.json
 01_Sources/YouTube/raw/
 01_Sources/YouTube/logs/
+02_Normalized/trending_topics/
 04_Insights/*.md
