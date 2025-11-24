@@ -222,3 +222,35 @@ class YouTubeTrendingClient(YouTubeBaseClient):
         if page_token:
             params["pageToken"] = page_token
         return self._make_request("videos", params)
+    
+
+class InnertubeClient:
+    """
+    비공식 Innertube API를 호출하는 클라이언트.
+    INNERTUBE_API_KEY와 context는 config에 저장해두었다고 가정합니다.
+    """
+    BASE_URL = "https://www.youtube.com/youtubei/v1"
+
+    def __init__(self, api_key: str, context: dict):
+        self.api_key = api_key
+        self.context = context
+
+    def _post(self, endpoint: str, body: dict) -> dict:
+        import requests, json
+        url = f"{self.BASE_URL}/{endpoint}?key={self.api_key}"
+        body["context"] = self.context
+        resp = requests.post(url, json=body, timeout=10)
+        resp.raise_for_status()
+        return resp.json()
+
+    def get_related_videos(self, video_id: str) -> dict:
+        body = {"videoId": video_id}
+        return self._post("next", body)
+
+    def get_home_feed(self) -> dict:
+        body = {"browseId": "FEwhat_to_watch"}
+        return self._post("browse", body)
+
+    def get_shorts_feed(self) -> dict:
+        body = {"browseId": "FEshorts"}
+        return self._post("browse", body)
