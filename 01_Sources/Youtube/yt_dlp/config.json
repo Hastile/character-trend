@@ -1,0 +1,9 @@
+{
+    "common_args": [
+        "--no-warnings",
+        "--skip-download"
+    ],
+    "metadata_only": [
+        "-J"
+    ]
+}
