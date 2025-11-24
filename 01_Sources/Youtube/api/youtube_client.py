@@ -198,3 +198,27 @@ class YouTubeStatsClient(YouTubeBaseClient):
         }
 
         return self._make_request("videos", params)
+    
+
+class YouTubeTrendingClient(YouTubeBaseClient):
+    """
+    videos.list + chart=mostPopular 전용 클라이언트
+    """
+    def list_most_popular(
+        self,
+        region_code: str = "KR",
+        category_id: Optional[str] = None,
+        max_results: int = 50,
+        page_token: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        params: Dict[str, Any] = {
+            "part": "snippet,statistics,contentDetails",
+            "chart": "mostPopular",
+            "regionCode": region_code,
+            "maxResults": max(1, min(max_results, 50)),
+        }
+        if category_id:
+            params["videoCategoryId"] = category_id
+        if page_token:
+            params["pageToken"] = page_token
+        return self._make_request("videos", params)
